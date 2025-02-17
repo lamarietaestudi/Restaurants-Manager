@@ -1,4 +1,4 @@
-# Restuarnts Manager
+# Restaurants Manager
 
 ## Description
 
