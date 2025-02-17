@@ -13,6 +13,7 @@ const initUsersSeed = async () => {
 
     const encryptPasswords = users.map((user) => {
       user.password = bcrypt.hashSync(user.password, 10);
+      user.rol = 'user';
       return user;
     });
 

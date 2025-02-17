@@ -1,10 +1,17 @@
 const { verifyToken } = require('../utils/jwt');
+const User = require('../src/api/models/user');
+
 const isAuth = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const parsedToken = token.replace('Bearer ', '');
 
+    if (!token || !token.startsWith('Bearer ')) {
+      return res.status(401).json('Invalid token or token not provided');
+    }
+
+    const parsedToken = token.replace('Bearer ', '');
     const { id } = verifyToken(parsedToken);
+
     const user = await User.findById(id);
     user.password = null;
     req.user = user;
@@ -17,6 +24,10 @@ const isAuth = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
+
+    if (!token || !token.startsWith('Bearer ')) {
+      return res.status(401).json('Invalid token or token not provided');
+    }
     const parsedToken = token.replace('Bearer ', '');
 
     const { id } = verifyToken(parsedToken);

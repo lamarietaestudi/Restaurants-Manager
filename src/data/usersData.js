@@ -3,7 +3,7 @@ const usersData = [
     username: 'juanito123',
     email: 'juanito123@correo.com',
     password: 'passJuan123',
-    rol: 'user',
+    rol: 'admin',
     location: 'Barcelona',
     allergies: ['lactosa', 'frutos secos']
   },

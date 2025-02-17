@@ -35,13 +35,14 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(400).json("Can't find user.");
     }
 
-    if (bcrypt.compareSync(req.body.password, user.password)) {
+    if (bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user._id);
       return res.status(200).json({ user, token });
     } else {
@@ -55,10 +56,15 @@ const login = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userUpdated = await User.findByIdAndUpdate(id, req.body, {
-      new: true
-    });
-    return res.status(200).json(userUpdated);
+
+    if (req.user.rol !== 'admin' && req.user._id.toString() !== id) {
+      return res.status(403).json('Unauthorized operation.');
+    } else {
+      const userUpdated = await User.findByIdAndUpdate(id, req.body, {
+        new: true
+      });
+      return res.status(200).json(userUpdated);
+    }
   } catch (error) {
     return res.status(400).json('Error in Update User');
   }
@@ -67,8 +73,13 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userDeleted = await User.findByIdAndDelete(id);
-    return res.status(200).json(userDeleted);
+
+    if (req.user.rol !== 'admin' && req.user._id.toString() !== id) {
+      return res.status(403).json('Unauthorized operation.');
+    } else {
+      const userDeleted = await User.findByIdAndDelete(id);
+      return res.status(200).json(userDeleted);
+    }
   } catch (error) {
     return res.status(400).json('Error in Delete User');
   }
