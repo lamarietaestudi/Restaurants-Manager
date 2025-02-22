@@ -2,8 +2,24 @@
 
 ## Description
 
-Colecciones: usuarios, restaurantes, platos.
-Incluye endpoints para crear, leer, modificar y borrar todas las colecciones (CRUD) en función de los permisos del rol de usuario.
+Restaurants Manager es una aplicación de backend para gestionar restaurantes, permitiendo a los usuarios consultar la carta de platos de dichos restaurantes, sus ingredientes (incluidos los alérgenos), y su ubicación.
+
+## Tecnologías utilizadas
+
+Backend: Node.js, Express.
+BBDD: MongoDB.
+Dependencias: bcrypt, dotenv, express, jsonwebtoken, mongoose.
+Dev Dependencias: nodemon.
+
+## Instalación
+Para clonar y ejecutar esta aplicación se necesita Git y Node.js (que incluye npm) instalados en tu dispositivo.
+- Clonar el repositorio: git clone https://github.com/lamarietaestudi/Restaurants-Manager.git
+- Acceder al directorio del proyecto: cd Restaurants-Manager
+- Instalar dependencias: npm install
+- Ejecutar la aplicación: npm run start
+
+## Uso
+Una vez que la aplicación esté ejecutándose, se accede a ella mediante `http://localhost:3000`
 
 ## EndPoints
 
