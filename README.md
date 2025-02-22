@@ -6,10 +6,10 @@ Restaurants Manager es una aplicación de backend para gestionar restaurantes, p
 
 ## Tecnologías utilizadas
 
-Backend: Node.js, Express.
-BBDD: MongoDB.
-Dependencias: bcrypt, dotenv, express, jsonwebtoken, mongoose.
-Dev Dependencias: nodemon.
+- Backend: Node.js, Express.
+- BBDD: MongoDB.
+- Dependencias: bcrypt, dotenv, express, jsonwebtoken, mongoose.
+- Dev Dependencias: nodemon.
 
 ## Instalación
 Para clonar y ejecutar esta aplicación se necesita Git y Node.js (que incluye npm) instalados en tu dispositivo.
