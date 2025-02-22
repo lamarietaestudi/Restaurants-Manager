@@ -21,94 +21,44 @@ Para clonar y ejecutar esta aplicación se necesita Git y Node.js (que incluye n
 ## Uso
 Una vez que la aplicación esté ejecutándose, se accede a ella mediante `http://localhost:3000`
 
+## Scripts disponibles
+- npm run start: inicia la aplicación.
+- npm run dev: inicia la aplicación en modo desarrollo con nodemon.
+- npm run dishesSeed: carga en la BBDD datos de platos.
+- npm run usersSeed: carga en la BBDD datos de usuarios.
+- npm run restaurantsSeed: carga en la BBDD datos de restaurantes.
+
 ## EndPoints
 
 ### Colección Usuarios (Users)
 
-Método: GET
-URL: /users
-Descripción: carga a todos los usuarios de la BBDD.
-Permisos: administrador
 
-Método: POST
-URL: /register
-Descripción: Registrarse en la BBDD.
-Permisos: cualquier usuario.
-
-Método: POST
-URL: /login
-Descripción: Acceder a la BBDD con nombre de usuario y contraseña, previo registro.
-Permisos: usuario registrado.
-
-Método: PUT
-URL: /users/:id
-Descripción: actualiza los datos registrados de un usuario.
-Permisos: usuario registrado y administrador.
-
-Método: DELETE
-URL: /users/:id
-Descripción: borra un usuario de la BBDD.
-Permisos: usuario registrado y administrador.
-
----
+| Método  | URL         | Descripción | Permisos |
+|---------|------------|-------------|----------|
+| **GET**  | `/users` | Carga a todos los usuarios de la BBDD | Administrador |
+| **POST** | `/register` | Registrarse en la BBDD | Cualquier usuario |
+| **POST** | `/login` | Acceder a la BBDD con usuario y contraseña | Usuario registrado |
+| **PUT**  | `/users/:id` | Actualiza los datos de un usuario | Usuario registrado y administrador |
+| **DELETE** | `/users/:id` | Borra un usuario de la BBDD | Usuario registrado y administrador |
 
 ### Colección Restaurantes (Restaurants)
 
-Método: GET
-URL: /restaurants
-Descripción: carga todos los restaurantes de la BBDD.
-Permisos: cualquier usuario.
-
-Método: GET
-URL: /restaurants/not-verified
-Descripción: carga los restaurantes que los usuarios registrados hayan guardado en la BBDD (no visibles hasta que el administrador verifique que son correctos).
-Permisos: usuario registrado y administrador.
-
-Método: POST
-URL: /restaurants
-Descripción: guarda un nuevo restaurante en la BBDD. Si lo hace un usuario registrado quedará como pendiente hasta que el adminitrador verifique que es correcto y lo haga visible. Si lo hace el administrador es visible automáticamente.
-Permisos: usuario registrado y administrador.
-
-Método: PUT
-URL: /restaurants/:id
-Descripción: actualiza los datos de un restaurante.
-Permisos: administrador.
-
-Método: DELETE
-URL: /restaurants/:id
-Descripción: borra un restaurante de la BBDD.
-Permisos: administrador.
-
----
+| Método  | URL                         | Descripción | Permisos |
+|---------|-----------------------------|-------------|----------|
+| **GET**  | `/restaurants` | Carga todos los restaurantes de la BBDD | Cualquier usuario |
+| **GET**  | `/restaurants/not-verified` | Carga los restaurantes pendientes de verificación | Usuario registrado y administrador |
+| **POST** | `/restaurants` | Guarda un nuevo restaurante en la BBDD | Usuario registrado y administrador |
+| **PUT**  | `/restaurants/:id` | Actualiza los datos de un restaurante | Administrador |
+| **DELETE** | `/restaurants/:id` | Borra un restaurante de la BBDD | Administrador |
 
 ### Colección Platos (Dishes)
-
-Método: GET
-URL: /dishes
-Descripción: carga todos los platos de la BBDD.
-Permisos: cualquier usuario.
-
-Método: GET
-URL: /dishes/not-verified
-Descripción: carga los platos que los usuarios registrados hayan guardado en la BBDD (no visibles hasta que el administrador verifique que son correctos).
-Permisos: usuario registrado y administrador.
-
-Método: POST
-URL: /dishes
-Descripción: guarda un nuevo plato en la BBDD. Si lo hace un usuario registrado quedará como pendiente hasta que el adminitrador verifique que es correcto y lo haga visible. Si lo hace el administrador es visible automáticamente.
-Permisos: usuario registrado y administrador.
-
-Método: PUT
-URL: /dishes/:id
-Descripción: actualiza los datos de un plato.
-Permisos: administrador.
-
-Método: DELETE
-URL: /dishes/:id
-Descripción: borra un plato de la BBDD.
-Permisos: administrador.
-
----
+| Método  | URL                      | Descripción | Permisos |
+|---------|--------------------------|-------------|----------|
+| **GET**  | `/dishes` | Carga todos los platos de la BBDD | Cualquier usuario |
+| **GET**  | `/dishes/not-verified` | Carga los platos pendientes de verificación | Usuario registrado y administrador |
+| **POST** | `/dishes` | Guarda un nuevo plato en la BBDD | Usuario registrado y administrador |
+| **PUT**  | `/dishes/:id` | Actualiza los datos de un plato | Administrador |
+| **DELETE** | `/dishes/:id` | Borra un plato de la BBDD | Administrador |
 
 ## Aviso Legal
 
