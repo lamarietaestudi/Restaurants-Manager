@@ -18,10 +18,10 @@ const initUsersSeed = async () => {
     });
 
     await User.insertMany(encryptPasswords);
-
-    await mongoose.disconnect();
   } catch (error) {
     console.log('Users Seed Error');
+  } finally {
+    await mongoose.disconnect();
   }
 };
 
