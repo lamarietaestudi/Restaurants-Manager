@@ -11,9 +11,10 @@ const initRestaurantsSeed = async () => {
     await Restaurant.collection.drop();
     await Restaurant.insertMany(restaurants);
 
-    await mongoose.disconnect();
   } catch (error) {
     console.log('Restaurants Seed Error');
+  } finally {
+    await mongoose.disconnect();
   }
 };
 
