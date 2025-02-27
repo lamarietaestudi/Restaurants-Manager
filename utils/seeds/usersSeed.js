@@ -18,6 +18,10 @@ const initUsersSeed = async () => {
     });
 
     await User.insertMany(encryptPasswords);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 61441364967c4155d338feafde3fbf164f4a4bf0
   } catch (error) {
     console.log('Users Seed Error');
   } finally {

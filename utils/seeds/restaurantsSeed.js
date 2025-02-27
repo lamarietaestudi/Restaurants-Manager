@@ -10,6 +10,10 @@ const initRestaurantsSeed = async () => {
 
     await Restaurant.collection.drop();
     await Restaurant.insertMany(restaurants);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 61441364967c4155d338feafde3fbf164f4a4bf0
   } catch (error) {
     console.log('Restaurants Seed Error');
   } finally {

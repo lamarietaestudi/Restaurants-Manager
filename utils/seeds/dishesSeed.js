@@ -10,7 +10,12 @@ const initDishesSeed = async () => {
 
     await Dishes.collection.drop();
     await Dishes.insertMany(dishes);
+<<<<<<< HEAD
   } catch (error) {
+=======
+
+ } catch (error) {
+>>>>>>> 61441364967c4155d338feafde3fbf164f4a4bf0
     console.log('Dishes Seed Error');
   } finally {
     await mongoose.disconnect();
