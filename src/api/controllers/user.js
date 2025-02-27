@@ -7,11 +7,19 @@ const getUsers = async (req, res, next) => {
     const users = await User.find();
     return res.status(200).json(users);
   } catch (error) {
-    return res.status(400).json('Error in Get Users');
+    return res
+      .status(400)
+      .json({ message: 'Error in Get Users', error: error.message });
   }
 };
 
 const register = async (req, res, next) => {
+  const userDuplicated = await User.findOne({ username: req.body.username });
+  if (userDuplicated) {
+    return res
+      .status(400)
+      .json({ message: 'This user already exists.', error: error.message });
+  }
   try {
     const newUser = new User({
       username: req.body.username,
@@ -22,14 +30,12 @@ const register = async (req, res, next) => {
       allergies: req.body.allergies
     });
 
-    const userDuplicated = await User.findOne({ username: req.body.username });
-    if (userDuplicated) {
-      return res.status(400).json('This user already exists.');
-    }
     const userSaved = await newUser.save();
     return res.status(201).json(userSaved);
   } catch (error) {
-    return res.status(400).json('Register error');
+    return res
+      .status(400)
+      .json({ message: 'Register error', error: error.message });
   }
 };
 
@@ -39,17 +45,23 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).json("Can't find user.");
+      return res
+        .status(400)
+        .json({ message: "Can't find user.", error: error.message });
     }
 
     if (bcrypt.compareSync(password, user.password)) {
       const token = generateToken(user._id);
       return res.status(200).json({ user, token });
     } else {
-      return res.status(400).json('Password incorrect.');
+      return res
+        .status(400)
+        .json({ message: 'Password incorrect.', error: error.message });
     }
   } catch (error) {
-    return res.status(400).json('Login error');
+    return res
+      .status(400)
+      .json({ message: 'Login error', error: error.message });
   }
 };
 
@@ -58,15 +70,23 @@ const updateUser = async (req, res, next) => {
     const { id } = req.params;
 
     if (req.user.rol !== 'admin' && req.user._id.toString() !== id) {
-      return res.status(403).json('Unauthorized operation.');
+      return res
+        .status(403)
+        .json({ message: 'Unauthorized operation.', error: error.message });
     } else {
-      const userUpdated = await User.findByIdAndUpdate(id, req.body, {
-        new: true
-      });
+      const userUpdated = await User.findByIdAndUpdate(
+        id,
+        { $set: req.body },
+        {
+          new: true
+        }
+      );
       return res.status(200).json(userUpdated);
     }
   } catch (error) {
-    return res.status(400).json('Error in Update User');
+    return res
+      .status(400)
+      .json({ message: 'Error in Update User', error: error.message });
   }
 };
 
@@ -75,13 +95,17 @@ const deleteUser = async (req, res, next) => {
     const { id } = req.params;
 
     if (req.user.rol !== 'admin' && req.user._id.toString() !== id) {
-      return res.status(403).json('Unauthorized operation.');
+      return res
+        .status(403)
+        .json({ message: 'Unauthorized operation.', error: error.message });
     } else {
       const userDeleted = await User.findByIdAndDelete(id);
       return res.status(200).json(userDeleted);
     }
   } catch (error) {
-    return res.status(400).json('Error in Delete User');
+    return res
+      .status(400)
+      .json({ message: 'Error in Delete User', error: error.message });
   }
 };
 

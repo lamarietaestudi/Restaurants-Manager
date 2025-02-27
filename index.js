@@ -19,7 +19,9 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('*', (req, res, next) => {
-  return res.status(404).json('Route not found');
+  return res
+    .status(404)
+    .json({ message: 'Route not found', error: error.message });
 });
 
 app.listen(3000, () => {

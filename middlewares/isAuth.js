@@ -6,7 +6,10 @@ const isAuth = async (req, res, next) => {
     const token = req.headers.authorization;
 
     if (!token || !token.startsWith('Bearer ')) {
-      return res.status(401).json('Invalid token or token not provided');
+      return res.status(401).json({
+        message: 'Invalid token or token not provided',
+        error: error.message
+      });
     }
 
     const parsedToken = token.replace('Bearer ', '');
@@ -17,31 +20,24 @@ const isAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json('Unauthorized');
+    return res
+      .status(401)
+      .json({ message: 'Unauthorized', error: error.message });
   }
 };
 
 const isAdmin = async (req, res, next) => {
   try {
-    const token = req.headers.authorization;
-
-    if (!token || !token.startsWith('Bearer ')) {
-      return res.status(401).json('Invalid token or token not provided');
-    }
-    const parsedToken = token.replace('Bearer ', '');
-
-    const { id } = verifyToken(parsedToken);
-    const user = await User.findById(id);
-
     if (user.rol !== 'admin') {
-      return res.status(400).json('Admin is required');
-    } else {
-      user.password = null;
-      req.user = user;
-      next();
+      return res
+        .status(400)
+        .json({ message: 'Admin is required', error: error.message });
     }
+    next();
   } catch (error) {
-    return res.status(401).json('Unauthorized');
+    return res
+      .status(401)
+      .json({ message: 'Unauthorized', error: error.message });
   }
 };
 

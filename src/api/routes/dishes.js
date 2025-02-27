@@ -11,8 +11,8 @@ const dishesRouter = require('express').Router();
 
 dishesRouter.get('/not-verified', [isAdmin], getDishesToVerify);
 dishesRouter.get('/', getDishes);
-dishesRouter.post('/', [isAuth], postDish); // [isAdmin] is redundant here
-dishesRouter.put('/:id', [isAdmin], updateDish);
-dishesRouter.delete('/:id', [isAdmin], deleteDish);
+dishesRouter.post('/', [isAuth], postDish);
+dishesRouter.put('/:id', [isAuth], [isAdmin], updateDish);
+dishesRouter.delete('/:id', [isAuth], [isAdmin], deleteDish);
 
 module.exports = dishesRouter;

@@ -39,9 +39,13 @@ const postDish = async (req, res, next) => {
 const updateDish = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const dishUpdated = await Dishes.findByIdAndUpdate(id, req.body, {
-      new: true
-    });
+    const dishUpdated = await Dishes.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      {
+        new: true
+      }
+    );
     return res.status(200).json(dishUpdated);
   } catch (error) {
     return res.status(400).json('Error in Update Dish controller');

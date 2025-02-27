@@ -13,8 +13,8 @@ const restaurantsRouter = require('express').Router();
 
 restaurantsRouter.get('/not-verified', [isAdmin], getRestToVerify);
 restaurantsRouter.get('/', getRestaurants);
-restaurantsRouter.post('/', [isAuth], postRestaurant); // [isAdmin] is redundant here
-restaurantsRouter.put('/:id', [isAdmin], updateRestaurant);
-restaurantsRouter.delete('/:id', [isAdmin], deleteRestaurant);
+restaurantsRouter.post('/', [isAuth], postRestaurant);
+restaurantsRouter.put('/:id', [isAuth], [isAdmin], updateRestaurant);
+restaurantsRouter.delete('/:id', [isAuth], [isAdmin], deleteRestaurant);
 
 module.exports = restaurantsRouter;
