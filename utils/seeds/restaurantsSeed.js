@@ -13,7 +13,7 @@ const initRestaurantsSeed = async () => {
 <<<<<<< HEAD
 =======
 
->>>>>>> 61441364967c4155d338feafde3fbf164f4a4bf0
+    await mongoose.disconnect();
   } catch (error) {
     console.log('Restaurants Seed Error');
   } finally {
