@@ -28,10 +28,8 @@ const isAuth = async (req, res, next) => {
 
 const isAdmin = async (req, res, next) => {
   try {
-    if (user.rol !== 'admin') {
-      return res
-        .status(400)
-        .json({ message: 'Admin is required', error: error.message });
+    if (!req.user || req.user.rol !== 'admin') {
+      return res.status(403).json({ message: 'Admin privileges required' });
     }
     next();
   } catch (error) {

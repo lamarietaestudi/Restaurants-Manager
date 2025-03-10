@@ -50,9 +50,11 @@ const updateRestaurant = async (req, res, next) => {
 
     const oldRestaurant = await Restaurant.findById(id);
     if (!oldRestaurant) {
-      return res
-        .status(404)
-        .json({ message: 'Restaurant not found', error: error.message });
+      return res.status(404).json({ message: 'Restaurant not found' });
+    }
+
+    if (req.user.rol !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized operation.' });
     }
 
     let updatedDishes = oldRestaurant.dishes.map((dish) => dish.toString());

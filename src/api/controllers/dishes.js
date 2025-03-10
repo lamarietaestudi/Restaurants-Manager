@@ -54,6 +54,11 @@ const updateDish = async (req, res, next) => {
         .status(404)
         .json({ message: 'Dish not found', error: error.message });
     }
+
+    if (req.user.rol !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized operation.' });
+    }
+
     const dishUpdated = await Dishes.findByIdAndUpdate(
       id,
       { $set: req.body },
