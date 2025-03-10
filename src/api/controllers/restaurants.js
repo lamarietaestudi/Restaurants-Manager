@@ -47,13 +47,29 @@ const postRestaurant = async (req, res, next) => {
 const updateRestaurant = async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    const oldRestaurant = await Restaurant.findById(id);
+    if (!oldRestaurant) {
+      return res
+        .status(404)
+        .json({ message: 'Restaurant not found', error: error.message });
+    }
+
+    let updatedDishes = oldRestaurant.dishes.map((dish) => dish.toString());
+
+    if (req.body.dishes && Array.isArray(req.body.dishes)) {
+      req.body.dishes.forEach((dishId) => {
+        if (!updatedDishes.includes(dishId)) {
+          updatedDishes.push(dishId);
+        }
+      });
+    }
+
     const restaurantUpdated = await Restaurant.findByIdAndUpdate(
       id,
-      { $set: req.body },
-      {
-        new: true
-      }
-    );
+      { $set: { dishes: updatedDishes, ...req.body } },
+      { new: true }
+    ).populate('dishes');
     return res.status(200).json(restaurantUpdated);
   } catch (error) {
     return res.status(400).json({

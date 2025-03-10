@@ -18,12 +18,10 @@ const getDishesToVerify = async (req, res, next) => {
     const dishes = await Dishes.find({ verified: false });
     return res.status(200).json(dishes);
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Error in Get Dishes to verify controller',
-        error: error.message
-      });
+    return res.status(400).json({
+      message: 'Error in Get Dishes to verify controller',
+      error: error.message
+    });
   }
 };
 
@@ -49,21 +47,24 @@ const postDish = async (req, res, next) => {
 const updateDish = async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    const oldDish = await Dishes.findById(id);
+    if (!oldDish) {
+      return res
+        .status(404)
+        .json({ message: 'Dish not found', error: error.message });
+    }
     const dishUpdated = await Dishes.findByIdAndUpdate(
       id,
       { $set: req.body },
-      {
-        new: true
-      }
+      { new: true }
     );
     return res.status(200).json(dishUpdated);
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Error in Update Dish controller',
-        error: error.message
-      });
+    return res.status(400).json({
+      message: 'Error in Update Dish controller',
+      error: error.message
+    });
   }
 };
 
@@ -73,12 +74,10 @@ const deleteDish = async (req, res, next) => {
     const dishDeleted = await Dishes.findByIdAndDelete(id);
     return res.status(200).json(dishDeleted);
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Error in Delete Dish controller',
-        error: error.message
-      });
+    return res.status(400).json({
+      message: 'Error in Delete Dish controller',
+      error: error.message
+    });
   }
 };
 

@@ -69,20 +69,37 @@ const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
 
+    const oldUser = await User.findById(id);
+    if (!oldUser) {
+      return res
+        .status(404)
+        .json({ message: 'User not found', error: error.message });
+    }
     if (req.user.rol !== 'admin' && req.user._id.toString() !== id) {
       return res
         .status(403)
         .json({ message: 'Unauthorized operation.', error: error.message });
-    } else {
-      const userUpdated = await User.findByIdAndUpdate(
-        id,
-        { $set: req.body },
-        {
-          new: true
-        }
-      );
-      return res.status(200).json(userUpdated);
     }
+
+    let updatedRelatedUsers = oldUser.relatedUsers.map((user) =>
+      user.toString()
+    );
+
+    if (req.body.relatedUsers && Array.isArray(req.body.relatedUsers)) {
+      req.body.relatedUsers.forEach((userId) => {
+        if (!updatedRelatedUsers.includes(userId)) {
+          updatedRelatedUsers.push(userId);
+        }
+      });
+    }
+
+    const userUpdated = await User.findByIdAndUpdate(
+      id,
+      { $set: { relatedUsers: updatedRelatedUsers } },
+      { new: true }
+    );
+
+    return res.status(200).json(userUpdated);
   } catch (error) {
     return res
       .status(400)
